@@ -16,6 +16,7 @@ public:
     ~trace_file();
     void read_file();
     string getline();
+    void reset_index(){line_index = 0;}
 
 private:
     FILE* file;
