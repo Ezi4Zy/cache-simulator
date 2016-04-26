@@ -12,10 +12,10 @@ using std::vector;
 
 class trace_file{
 public:
-    explicit trace_file(const char* filename);
+    explicit trace_file(const string& filename);
     ~trace_file();
     void read_file();
-    string getline();
+    string read_line();
     void reset_index(){line_index = 0;}
 
 private:
@@ -23,5 +23,6 @@ private:
     int line_index;
     vector<string> lines;
 };
+
 
 #endif //CACHE_SIMULATOR_TRACE_FILE_H

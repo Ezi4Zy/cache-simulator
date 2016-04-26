@@ -2,16 +2,15 @@
 // Created by fear on 2016/4/24.
 //
 
+#include "base.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "trace_file.h"
 
-
-
-trace_file::trace_file(const char *filename) {
-    file = fopen(filename,"r");
+trace_file::trace_file(const string& filename) {
+    file = fopen(filename.c_str(),"r");
     if(file == NULL){
-        fputs ("Filename error",stderr);
+        fputs (" Open file error",stderr);
         exit (1);
     }
     line_index = 0;
@@ -24,8 +23,8 @@ trace_file::~trace_file() {
 
 void trace_file::read_file() {
     //obtain the file size
-    fseek (file, 0 , SEEK_END);
-    int file_size = ftell (file);
+    fseek(file, 0 , SEEK_END);
+    long file_size = ftell (file);
     rewind (file);
 
     // allocate memory to contain the whole file:
@@ -36,9 +35,9 @@ void trace_file::read_file() {
     }
 
     // copy the file into the buffer:
-    int read_size = fread (buffer, 1, file_size, file);
+    int read_size = fread(buffer, 1, file_size, file);
     if (read_size != file_size) {
-        fputs("Reading error", stderr);
+        fputs("Read file error", stderr);
         exit(3);
     }
     char* begin = buffer;
@@ -59,7 +58,7 @@ void trace_file::read_file() {
     free(buffer);
 }
 
-string trace_file::getline() {
+string trace_file::read_line() {
     if(line_index < lines.size())
         return lines[line_index++];
     else
